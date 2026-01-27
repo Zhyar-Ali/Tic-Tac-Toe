@@ -1,42 +1,40 @@
-function gameBoard(pick,mark){
+function gameBoardObject(){
     const gameboardArray = [["_","_","_"],
                             ["_","_","_"],
                             ["_","_","_"]];
 
-    const gameboardUpdate = () => { 
-        if (gameboardArray [pick[0]][pick[1]] === "_"){
-            gameboardArray [pick[0]][pick[1]] = mark;
-        }
-    };
-
-    const getGameboardArray = () => gameboardArray.forEach(inner => {
-        console.log(inner);
-    });
-    ;
-
-    return {gameboardUpdate, getGameboardArray};
+    return { gameboardArray };
 }
 
-function players(name, mark){
-    const score = 0;
+function playersObject(name, mark){
+    let score = 0;
 
     const getScore = () => score;
     const addScore = () => {score++;};
 
-    return { name, mark, getScore, addScore};
+    return { name, mark, getScore, addScore };
 }
 
 const gameFlow = (function (){
-    const player = (name, mark) => players(name,mark);
-    const gameBoardd = (pick,mark) => gameBoard(pick,mark);
 
-    return {player, gameBoard};
+    const board = gameBoardObject().gameboardArray;
+    const player = (name, mark) => playersObject(name,mark);
+
+    const gameboardUpdate = (pos,mark) => {
+            if (board[pos[0]][pos[1]] === "_"){
+                board[pos[0]][pos[1]] = mark;
+            }
+    }
+
+    const getGameboard = () => board.forEach(element => console.log(element));
+
+    //win/tie condition function && new match/reset function then move onto DOM
+
+    return {player, gameBoard, gameboardUpdate,getGameboard};
 
 })();
 
-const player1 = gameFlow.player('A','x');
-const player2 = gameFlow.player('B','o');
-const gameBoardd = gameFlow.gameBoard([0,1],player1.mark);
-gameBoardd.gameboardUpdate();
-gameBoardd.getGameboardArray();
-
+const player = gameFlow.player("zhyar","x");
+const gameBoard = gameFlow.gameBoard();
+gameFlow.gameboardUpdate([0,1],player.mark);
+gameFlow.getGameboard();
