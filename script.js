@@ -1,19 +1,84 @@
 function gameBoardObject(){
     let gameboardArray = [["_","_","_"],
-                            ["_","_","_"],
-                            ["_","_","_"]];
+                          ["_","_","_"],
+                          ["_","_","_"]];
 
     return { gameboardArray };
 }
 
 function playersObject(name, mark){
-    let score = 3;
+    let score = 0;
 
     const getScore = () => score;
     const addScore = () => {score++;};
     const resetScore = () => {score = 0};
 
     return { name, mark, getScore, addScore, resetScore };
+}
+
+function winCon(p1,p2,board){
+    let winner = "";
+    let result = [];
+
+    function checkResult(){
+        if (result.every(item => item === p1.mark)){
+            winner = p1.name;
+        }else if (result.every(item => item === p2.mark)){
+            winner = p2.name;
+        }else{
+            result.length = 0;
+        }
+    }
+
+    function checkWinner(){
+        if (winner === ""){
+            return false;
+        }else {
+            return true;
+        }
+    }
+
+    const check = () => {
+
+        while (true){
+            for (let i = 0; i< board.length; i++){
+                result.push(board[i][i]);
+            }
+
+            checkResult();
+            if (checkWinner()){
+                break;
+            }
+
+            for (let i = 0; i < board.length; i++){
+                result.push(board[i][2-i]);
+            }
+            
+            checkResult();
+            if (checkWinner()){
+                break;
+            }
+
+            for (let i = 0; i < board.length; i++){
+                for(let j=0; j < board[i].length; j++){
+                    result.push(board[i][j]);
+                }
+                checkResult();
+                if (checkWinner()){
+                    break;
+                }
+            }
+
+            if (checkWinner() === false){
+                winner = "tie";
+                break;
+            }
+        }
+    };
+
+    const getWinner = () => winner;
+
+    return { winner, check, result, getWinner };
 }
 
 const gameFlow = (function (){
@@ -29,8 +94,6 @@ const gameFlow = (function (){
 
     const getGameboard = () => board.forEach(element => console.log(element));
 
-    //win/tie condition function
-    
     const newMatch = () => { 
         for (let i=0; i<board.length;i++){
             for (let j=0; j<board[i].length;j++){
@@ -44,13 +107,33 @@ const gameFlow = (function (){
         gameFlow.newMatch();
     };
 
-    return {player, gameboardUpdate,getGameboard, newMatch, reset};
+    const winner = (p1,p2) => winCon(p1,p2, board);
+
+    return {player, gameboardUpdate,getGameboard, newMatch, reset, winner};
 
 })();
 
 const player = gameFlow.player("zhyar","x");
+const player2 = gameFlow.player("wa","o");
+const win = gameFlow.winner(player,player2);
+
+gameFlow.gameboardUpdate([0,0],player.mark);
 gameFlow.gameboardUpdate([0,1],player.mark);
+
+gameFlow.gameboardUpdate([1,1],player.mark);
+gameFlow.gameboardUpdate([1,0],player.mark);
+gameFlow.gameboardUpdate([2,0],player2.mark);
+
+
+gameFlow.gameboardUpdate([0,0],player.mark);
+
 gameFlow.getGameboard();
-gameFlow.reset(player);
-gameFlow.getGameboard();
+
+win.check();
+console.log(win.getWinner());
+console.log(win.result);
+
+
+
+
 
