@@ -5,13 +5,18 @@
 }
 .container{
     height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+    grid-template-rows: 1fr 3fr 1fr;
     align-content: center;
 }
 .gridLayout{
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
     display: grid;
     grid-template: repeat(3,1fr) / repeat(3,1fr);
     background-color: black;
-    width: 30%;
+    width: 50%;
     justify-self: center;
     gap: 3px;
 }
@@ -19,4 +24,31 @@
     font-size: 5rem;
     background-color: white;
     text-align: center;
+}
+.playerOne{
+    grid-column: 1 / 2;
+    grid-row: 2 / 3;
+    display: grid;
+    grid-template: repeat(2,1fr) / 1fr;
+    width: 60%;
+    align-self: flex-start;
+    justify-self: center;
+}
+.playerTwo{
+    grid-column: 3 / 4;
+    grid-row: 2 / 3;
+    display: grid;
+    grid-template: repeat(2,1fr) / 1fr;
+    width: 60%;
+    align-self: flex-start;
+    justify-self: center;
+}
+form{
+    display: grid;
+    grid-template: repeat(3,1fr) / repeat(2,1fr);
+    gap: 15px;
+}
+button{
+    grid-column: 2/3;
+   
 }
