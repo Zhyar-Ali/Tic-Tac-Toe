@@ -110,8 +110,9 @@ const gameFlow = (function (){
         }
     };
 
-    const reset = (inputPlayer) => {
-        inputPlayer.resetScore();
+    const reset = (p1,p2) => {
+        p1.resetScore();
+        p2.resetScore();
         gameFlow.resetBoard();
     };
 
@@ -143,6 +144,7 @@ gameFlow.newMatch(win);
 gameFlow.getGameboard();
 console.log(player.getScore());
 console.log(player2.getScore());
+
 
 
 
