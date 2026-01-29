@@ -151,6 +151,8 @@ const dom = (function() {
 
     const board = gameFlow.gameBoard();
     const grid = document.querySelector(".gridLayout");
+    const submitButtonOne = document.getElementById("submitOne");
+    const submitButtonTwo = document.getElementById("submitTwo");
 
     const createDiv = () => {
         for (let i=0; i<board.length; i++){
@@ -163,12 +165,30 @@ const dom = (function() {
         }
     };
 
-    return { createDiv };
+    function submitClickOne (event){
+        event.preventDefault();
+        const name = document.getElementById("playerOneName").value;
+        const mark = document.getElementById("playerOneMark").value;
+        console.log(name + mark);
+    }
+
+     function submitClickTwo (event){
+        event.preventDefault();
+        const name = document.getElementById("playerTwoName").value;
+        const mark= document.getElementById("playerTwoMark").value;
+        console.log(name + mark);
+    }
+
+    const test = () => {
+        submitButtonOne.addEventListener("click", submitClickOne);
+        submitButtonTwo.addEventListener("click", submitClickTwo);
+    };
+
+    return { createDiv, test};
 
 })();
 
 dom.createDiv();
-
-
+dom.test();
 
 
