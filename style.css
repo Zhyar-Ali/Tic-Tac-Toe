@@ -3,3 +3,20 @@
     padding: 0;
     box-sizing: border-box;
 }
+.container{
+    height: 100vh;
+    align-content: center;
+}
+.gridLayout{
+    display: grid;
+    grid-template: repeat(3,1fr) / repeat(3,1fr);
+    background-color: black;
+    width: 30%;
+    justify-self: center;
+    gap: 3px;
+}
+.box{
+    font-size: 5rem;
+    background-color: white;
+    text-align: center;
+}

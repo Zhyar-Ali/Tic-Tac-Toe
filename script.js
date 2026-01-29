@@ -100,6 +100,8 @@ const gameFlow = (function (){
             }
     }
 
+    const gameBoard = () => board;
+
     const getGameboard = () => board.forEach(element => console.log(element));
 
     const resetBoard = () => { 
@@ -123,31 +125,49 @@ const gameFlow = (function (){
         gameFlow.resetBoard();
     };
 
-    return { player, gameboardUpdate,getGameboard, resetBoard, reset, winner, newMatch };
+    return { player, gameboardUpdate,getGameboard, resetBoard, reset, winner, newMatch, gameBoard };
 
 })();
 
-const player = gameFlow.player("zhyar","x");
-const player2 = gameFlow.player("wa","o");
-const win = gameFlow.winner(player,player2);
+// const player = gameFlow.player("zhyar","x");
+// const player2 = gameFlow.player("wa","o");
+// const win = gameFlow.winner(player,player2);
 
-gameFlow.gameboardUpdate([0,0],player.mark);
-gameFlow.gameboardUpdate([1,1],player.mark);
-gameFlow.gameboardUpdate([2,2],player.mark);
-
-
-gameFlow.getGameboard();
-
-win.check();
-console.log(win.getWinner());
-gameFlow.newMatch(win);
-gameFlow.getGameboard();
-console.log(player.getScore());
-console.log(player2.getScore());
+// gameFlow.gameboardUpdate([0,0],player.mark);
+// gameFlow.gameboardUpdate([1,1],player.mark);
+// gameFlow.gameboardUpdate([2,2],player.mark);
 
 
+// gameFlow.getGameboard();
 
+// win.check();
+// console.log(win.getWinner());
+// gameFlow.newMatch(win);
+// gameFlow.getGameboard();
+// console.log(player.getScore());
+// console.log(player2.getScore());
 
+const dom = (function() {
+
+    const board = gameFlow.gameBoard();
+    const grid = document.querySelector(".gridLayout");
+
+    const createDiv = () => {
+        for (let i=0; i<board.length; i++){
+            for (let j=0; j<board[i].length; j++){
+                const div = document.createElement("div");
+                div.classList.add("box");
+                div.textContent = board[i][j];
+                grid.appendChild(div);
+            }
+        }
+    };
+
+    return { createDiv };
+
+})();
+
+dom.createDiv();
 
 
 
