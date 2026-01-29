@@ -78,7 +78,15 @@ function winCon(p1,p2,board){
 
     const getWinner = () => winner;
 
-    return { winner, check, result, getWinner };
+    const addScoreToWinner = () => {
+        if(winner === p1.name){
+            p1.addScore();
+        }else if(winner === p2.name){
+            p2.addScore();
+        }
+    };
+
+    return { winner, check, result, getWinner, addScoreToWinner };
 }
 
 const gameFlow = (function (){
@@ -94,7 +102,7 @@ const gameFlow = (function (){
 
     const getGameboard = () => board.forEach(element => console.log(element));
 
-    const newMatch = () => { 
+    const resetBoard = () => { 
         for (let i=0; i<board.length;i++){
             for (let j=0; j<board[i].length;j++){
                 board[i][j] = "_";
@@ -104,12 +112,17 @@ const gameFlow = (function (){
 
     const reset = (inputPlayer) => {
         inputPlayer.resetScore();
-        gameFlow.newMatch();
+        gameFlow.resetBoard();
     };
 
     const winner = (p1,p2) => winCon(p1,p2, board);
 
-    return {player, gameboardUpdate,getGameboard, newMatch, reset, winner};
+    const newMatch = (win) => {
+        win.addScoreToWinner();
+        gameFlow.resetBoard();
+    };
+
+    return { player, gameboardUpdate,getGameboard, resetBoard, reset, winner, newMatch };
 
 })();
 
@@ -118,20 +131,20 @@ const player2 = gameFlow.player("wa","o");
 const win = gameFlow.winner(player,player2);
 
 gameFlow.gameboardUpdate([0,0],player.mark);
-gameFlow.gameboardUpdate([0,1],player.mark);
-
 gameFlow.gameboardUpdate([1,1],player.mark);
-gameFlow.gameboardUpdate([1,0],player.mark);
-gameFlow.gameboardUpdate([2,0],player2.mark);
+gameFlow.gameboardUpdate([2,2],player.mark);
 
-
-gameFlow.gameboardUpdate([0,0],player.mark);
 
 gameFlow.getGameboard();
 
 win.check();
 console.log(win.getWinner());
-console.log(win.result);
+gameFlow.newMatch(win);
+gameFlow.getGameboard();
+console.log(player.getScore());
+console.log(player2.getScore());
+
+
 
 
 
