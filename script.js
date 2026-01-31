@@ -131,13 +131,6 @@ const gameFlow = (function (){
 
 // const win = gameFlow.winner(player,player2);
 
-// gameFlow.gameboardUpdate([0,0],player.mark);
-// gameFlow.gameboardUpdate([1,1],player.mark);
-// gameFlow.gameboardUpdate([2,2],player.mark);
-
-
-// gameFlow.getGameboard();
-
 // win.check();
 // console.log(win.getWinner());
 // gameFlow.newMatch(win);
@@ -153,8 +146,8 @@ const dom = (function() {
     const submitButtonOne = document.getElementById("submitOne");
     const submitButtonTwo = document.getElementById("submitTwo");
 
-    let p1 = gameFlow.player("","x");
-    let p2 = gameFlow.player("","o");
+    let p1 = gameFlow.player("","");
+    let p2 = gameFlow.player("","");
 
     function submitClickOne (event){
         event.preventDefault();
